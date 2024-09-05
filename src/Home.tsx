@@ -86,7 +86,7 @@ const Home: FC<HomeProps> = () => {
                 <MenuIcon />
                 </IconButton>
                 <Stack direction="row" spacing={2}>
-                    <Avatar variant="square" { ...stringAvatar('Prime Vision Tardiolo') } />
+                    <Avatar variant="square" { ...stringAvatar('First App with Typescript') } />
                 </Stack>
                 
                 {isAuthenticated && (
@@ -136,7 +136,7 @@ const Home: FC<HomeProps> = () => {
                 <MenuIcon />
                 </IconButton>
                 <Stack direction="row" spacing={2}>
-                    <Avatar variant="square" { ...stringAvatar('Prime Vision Tardiolo') } />
+                    <Avatar variant="square" { ...stringAvatar('First App with Typescript') } />
                 </Stack>
                 
                 {isAuthenticated && (
@@ -158,7 +158,8 @@ const Home: FC<HomeProps> = () => {
                     </>
                 )}
 
-                {!isAuthenticated && (<>
+                {!isAuthenticated && (
+                    <>
                     <Button  color="inherit" className={styles.MarginLeftAuto} onClick={handleLogin}>Login</Button>
                     </>
                 )}

@@ -72,6 +72,13 @@ const Login: FC<LoginProps> = () => {
             console.log(error);
         });
          */
+
+        if(email === 'p.tardiolobonifazi@vivasoft.it' || password === 'Paperino'){
+          setIsAuthenticated(true);
+          localStorage.setItem("isAuthenticated", 'true');
+          // To navigate to another component
+          navigate("/");
+        }
     };
 
     return (
