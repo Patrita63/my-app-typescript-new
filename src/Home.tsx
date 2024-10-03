@@ -5,6 +5,7 @@ import styles from './Home.module.css';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import { PostData } from './Models/postdata';
+import { TipoUtenteData } from './Models/tipoutentedata'
 
 import {
     AppBar,
@@ -30,8 +31,10 @@ interface HomeProps {}
 // const Home = ()  => {
 const Home: FC<HomeProps> = () => {
     const [posts, setPosts] = useState<any[]>([]);
-
     const [hasPost, setHasPost] = useState(false);
+
+    const [listTipoUtente, setListTipoUtente] = useState<any[]>([]);
+    const [hasTipoUtente, setHasTipoUtente] = useState(false);
 
     let isAuthenticated = localStorage.getItem("isAuthenticated");
     let username = localStorage.getItem("username");
@@ -110,7 +113,39 @@ const Home: FC<HomeProps> = () => {
         });
 
     };
+    
+    
+    const callGetTipiUtenteAsync = async () => {
+        // https://localhost:7182/api/TipoUtenteAsync
+        const urlRootAPI = "https://localhost:44372/";
+        const API_URL = urlRootAPI + "api/TipoUtenteAsync";
+        console.log("callGetTipiUtenteAsync - URL Endpoint = " +  API_URL);
 
+        debugger;
+        await axios.get(API_URL, {
+            headers: {
+            "Content-Type": "application/json"
+            }
+        })
+        .then((response) => {
+            debugger;
+            if(response.data){
+                console.log(response.data);
+                console.log(response.status);
+                // console.log('id: ' + response.data[0].id);
+                // console.log('Tipo: ' + response.data[0].tipo);
+                // console.log('Descrizione: ' + response.data[0].descrizione);
+                setListTipoUtente(response.data);
+                setHasTipoUtente(true);
+            }
+        })
+        .catch((error) => {
+            setHasTipoUtente(false);
+            // localStorage.clear();
+            console.log(error);
+        });
+
+    };
 
     const getUserById = (idUtente: number) => {
        /*  const urlRootAPI = "https://jsonplaceholder.typicode.com/";
@@ -175,6 +210,8 @@ const Home: FC<HomeProps> = () => {
 
                     <Button color="inherit" variant="contained" className={styles.MarginLeftAuto} onClick={callEndpoint}>Using AXIOS</Button>
                     
+                    <Button color="inherit" variant="contained" className={styles.MarginLeftAuto} onClick={callGetTipiUtenteAsync}>call GetTipiUtenteAsync </Button>
+                    
                     {hasPost && (
                        
                         <div>
@@ -212,6 +249,33 @@ const Home: FC<HomeProps> = () => {
                         </div>
                         
                     )}
+
+                    {hasTipoUtente && (
+                       
+                       <div>
+                           <table>
+                               <thead>
+                                   <tr>
+                                       <th>TipoUtente Id</th>
+                                       <th>Tipologia</th>
+                                       <th>Descrizione</th>
+                                   </tr>
+                               </thead>
+                               <tbody>
+                                   {listTipoUtente.map((item, index) => (
+                                   <tr key={index}>
+                                       <td>{item.id}</td>
+                                       <td>{item.tipo}</td>
+                                       <td>{item.descrizione}</td>
+                                   </tr>
+                                   ))}
+                               </tbody>
+                           </table>
+
+                       </div>
+                       
+                   )}
+
                     </>
                 )}
             </>
